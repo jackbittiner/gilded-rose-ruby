@@ -12,7 +12,7 @@ class GildedRose
     @items.each do |item|
       if item.name != "Brie" and item.name != "Backstage Passes"
         if item.quality > 0
-          if item.name != "Sulfuras, Hand of Ragnaros"
+          if item.name != "Sulfuras"
             item.quality = item.quality - 1
           end
         end
