@@ -4,6 +4,7 @@ require 'item'
 describe GildedRose do
 
   let(:normal_item) { Item.new('normal item', 20, 30) }
+  let(:brie) { Item.new('Brie', 20, 30) }
 
   describe "#update_quality" do
 
@@ -32,6 +33,28 @@ describe GildedRose do
         gilded_rose.update_quality
         expect(gilded_rose.items[0].quality).to eq 0
       end
+    end
+
+    context 'Brie' do
+
+      subject(:gilded_rose) {described_class.new([brie])}
+
+      it 'increase quality by 1' do
+        gilded_rose.update_quality
+        expect(gilded_rose.items[0].quality).to eq 31
+      end
+
+      it 'decreases sell_in by 1' do
+        gilded_rose.update_quality
+        expect(gilded_rose.items[0].sell_in).to eq 19
+      end
+
+      it 'cannot have a quality greater than 50' do
+        gilded_rose.items[0].quality = 50
+        gilded_rose.update_quality
+        expect(gilded_rose.items[0].quality).to eq 50
+      end
+
     end
   end
 end
