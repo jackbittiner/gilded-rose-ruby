@@ -10,6 +10,7 @@ class GildedRose
 
   def update_quality()
     update_brie
+    update_backstage_passes
     # @items.each do |item|
     #   if item.name != "Brie" and item.name != "Backstage Passes"
     #     if item.quality > 0
@@ -59,9 +60,19 @@ class GildedRose
 
   def update_brie
     @items.each do |item|
-      item.quality += 1 if item.name == 'Brie'
       item.sell_in -= 1 if item.name == 'Brie'
+      item.quality += 1 if item.name == 'Brie'
       item.quality = 50 if item.quality > 50
+    end
+  end
+
+  def update_backstage_passes
+    @items.each do |item|
+      item.sell_in -= 1 if item.name == 'Backstage Passes'
+      item.quality += 1 if item.name == 'Backstage Passes'
+      item.quality += 1 if item.name == 'Backstage Passes' && item.sell_in < 5
+      item.quality += 1 if item.name == 'Backstage Passes' && item.sell_in < 10
+      item.quality = 0 if item.name == 'Backstage Passes' && item.sell_in < 0
     end
   end
 end
