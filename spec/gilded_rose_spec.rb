@@ -26,6 +26,12 @@ describe GildedRose do
         gilded_rose.update_quality
         expect(gilded_rose.items[0].quality).to eq 28
       end
+
+      it 'cannot have a quality less than 0' do
+        gilded_rose.items[0].quality = 0
+        gilded_rose.update_quality
+        expect(gilded_rose.items[0].quality).to eq 0
+      end
     end
   end
 end
