@@ -11,51 +11,7 @@ class GildedRose
   def update_quality()
     update_brie
     update_backstage_passes
-    # @items.each do |item|
-    #   if item.name != "Brie" and item.name != "Backstage Passes"
-    #     if item.quality > 0
-    #       if item.name != "Sulfuras"
-    #         item.quality = item.quality - 1
-    #       end
-    #     end
-    #   else
-    #     if item.quality < 50
-    #       item.quality = item.quality + 1
-    #       if item.name == "Backstage Passes"
-    #         if item.sell_in < 11
-    #           if item.quality < 50
-    #             item.quality = item.quality + 1
-    #           end
-    #         end
-    #         if item.sell_in < 6
-    #           if item.quality < 50
-    #             item.quality = item.quality + 1
-    #           end
-    #         end
-    #       end
-    #     end
-    #   end
-    #   if item.name != "Sulfuras"
-    #     item.sell_in = item.sell_in - 1
-    #   end
-    #   if item.sell_in < 0
-    #     if item.name != "Brie"
-    #       if item.name != "Backstage Passes"
-    #         if item.quality > 0
-    #           if item.name != "Sulfuras"
-    #             item.quality = item.quality - 1
-    #           end
-    #         end
-    #       else
-    #         item.quality = item.quality - item.quality
-    #       end
-    #     else
-    #       if item.quality < 50
-    #         item.quality = item.quality + 1
-    #       end
-    #     end
-    #   end
-    # end
+    update_normal_item
   end
 
   def update_brie
@@ -73,6 +29,19 @@ class GildedRose
       item.quality += 1 if item.name == 'Backstage Passes' && item.sell_in < 5
       item.quality += 1 if item.name == 'Backstage Passes' && item.sell_in < 10
       item.quality = 0 if item.name == 'Backstage Passes' && item.sell_in < 0
+    end
+  end
+
+  def update_normal_item
+    @items.each do |item|
+      if item.name != 'Brie' && item.name != 'Sulfuras' && item.name != 'Backstage Passes'
+        item.sell_in -= 1
+        item.quality -= 1
+        if item.sell_in < 0
+          item.quality -= 1
+        end
+        item.quality = 0 if item.quality < 0
+      end
     end
   end
 end
